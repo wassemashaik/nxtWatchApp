@@ -1,0 +1,7 @@
+.videos-sections {
+    display: flex;
+    justify-content: space-around;
+    margin: auto;
+    width: 90%;
+    max-width: 1110px;
+}

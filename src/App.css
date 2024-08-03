@@ -4,6 +4,7 @@
 
 .App-logo {
   height: 40vmin;
+
   pointer-events: none;
 }
 
@@ -12,9 +13,18 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
+.miscellaneous {
+  color: #0f3970;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+  margin: 10px;
+  font-size: 18px;
+  
+}
 .App-header {
-  background-color: #282c34;
+  background-color: #3a3b3b;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
