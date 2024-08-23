@@ -4,6 +4,7 @@ import VideoItem from '../VideoItem'
 import {Oval} from 'react-loader-spinner'
 import './index.css'
 import {NoVideos, SearchNotFoundContainer,Heading, RetryBtn} from './styledComponents'
+import WatchContext from '../../context/WatchContext'
 const apiStatusConstants = {
   initial: 'INITIAL',
   success: 'SUCCESS',
@@ -59,7 +60,18 @@ class AllVideos extends Component {
   }
 
   renderNoSearchResult=()=> {
-      const {videosList} = this.state
+    <WatchContext.Consumer>
+      {value => {
+        const {isDarkTheme} = value
+        
+        const AllVidoesBgClassName = isDarkTheme ? 'bg-container-dark' : 'bg-container-light'
+        const failureImgUrl = isDarkTheme ?
+        '' 
+        : ''
+        const textColor = isDarkTheme 
+        ? 'text-color-dark'
+        : 'text-color-light'
+        const {videosList} = this.state
       const rendervideosList = videosList.length > 0
   
       return rendervideosList ? (
@@ -80,6 +92,9 @@ class AllVideos extends Component {
         <p >Try different key words or remove search filter</p>
         </SearchNotFoundContainer>
       )
+      }}
+    </WatchContext.Consumer>
+      
   }
   renderLoadingView = ()=>{
     return(

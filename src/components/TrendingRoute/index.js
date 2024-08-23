@@ -133,7 +133,6 @@ export default function TrendingRoute({mode, toggleMode}) {
   return (
     <div $mode={mode} toggleMode={toggleMode}>
       {renderAll()}
-      <Link to="/"><button onClick={backtoHome}>Back</button></Link> 
     </div>
   )
 }

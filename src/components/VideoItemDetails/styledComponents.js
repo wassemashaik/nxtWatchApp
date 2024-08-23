@@ -8,13 +8,13 @@ export const Godot = styled(GoDot)`
   margin-top: 5px;
 `
 export const LikeBtn = styled.button`
-  color: ${props=> (props.isactive ? '#0f3970': '')};
+  color: ${props=> (props.isActive ? '#2563eb': ' #64748b')};
   padding: 10px 20px;
   border-radius: 5px;
   margin: 0 5px;
   border: none;
   cursor: pointer;
-  outline: none;
+  outline: 0;
   &:hover {
     color: #0f3970;
     opacity: 0.8;

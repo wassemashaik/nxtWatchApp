@@ -11,8 +11,8 @@ import {
    View,
    Profile,
    DetailsContainer,
+   LinkItem
   } from './styledComponents'
-import { Link } from 'react-router-dom'
 import VideoItemDetails from '../VideoItemDetails'
 
 const VideoItem = props => {
@@ -30,8 +30,8 @@ const VideoItem = props => {
   }
   
   return (
-    <Link to={`/videos/${id}`}>
-    <VideoItemList key={id} $mode={props.mode} onClick={showVideoDetails}>
+    <LinkItem to={`/videos/${id}`}>
+    <VideoItemList $mode={props.mode} onClick={showVideoDetails}>
       <Thumbnail src={thumbnailUrl} alt="thumbnail"/>
       <DetailsContainer>
       <Profile src={profileImageUrl} className='profile-img' alt="profile image"/>
@@ -47,7 +47,7 @@ const VideoItem = props => {
         </Container>
       </DetailsContainer>
     </VideoItemList>
-    </Link>
+    </LinkItem>
   )
 }
 export default VideoItem

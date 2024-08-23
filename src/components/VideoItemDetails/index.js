@@ -7,7 +7,6 @@ import { formatDistanceToNow} from 'date-fns'
 import { AiOutlineDislike } from "react-icons/ai";
 import { CgPlayListAdd } from "react-icons/cg";
 import { AiOutlineLike } from "react-icons/ai";
-import { useSavedVideos } from '../SavedVideosContext'
 import { 
   RetryBtn,
   LikeBtn,
@@ -25,6 +24,8 @@ import {
   Description,
   Godot
 } from './styledComponents'
+import WatchContext from '../../context/WatchContext'
+import { Thumbnail } from '../VideoItem/styledComponents'
 
 const apiStatusConstants = {
   initial: 'INITIAL',
@@ -39,9 +40,8 @@ export default function VideoItemDetails({mode, toggleMode}) {
   const [apiStatus, setApiStatus] = useState({apiStatus: apiStatusConstants.initial})
   const jwtToken = Cookies.get('jwt_token')
   const {id} = useParams()
-  const [activeBtn, setActiveBtn] = useState('')
-  const {saveVideo, removeVideos, isVideoSaved} = useSavedVideos()
-
+  const [activeBtn, setActiveBtn] = useState(null)
+  const [isSaved, setIsSaved ] = useState(false)
   const activeLikeBtn = ()=> {
     setActiveBtn(prevState => (prevState === 'like'? '': 'like'))
   }
@@ -49,22 +49,15 @@ export default function VideoItemDetails({mode, toggleMode}) {
   const activeDisLikeBtn = ()=> {
     setActiveBtn(prevState => (prevState === 'dislike'? '': 'dislike'))
   }
-  useEffect(() => {
-      
+
+  useEffect(() => { 
       if(jwtToken === undefined) {
         navigate('/login')
       }else {
         getVideoItemDetails()
       }
     }, [navigate, jwtToken])
-
-    const handlesaveVideo = ()=> {
-      if (isVideoSaved(videoDetails.id)){
-        removeVideos(videoDetails.id)
-      }else {
-        saveVideo(videoDetails)
-      }
-    }
+    
   const getVideoItemDetails = async() => {
     setApiStatus(apiStatusConstants.inProgress)
     const videoItemDetailsApiUrl = `https://apis.ccbp.in/videos/${id}`
@@ -88,7 +81,8 @@ export default function VideoItemDetails({mode, toggleMode}) {
         profileImageUrl: data.video_details.channel.profile_image_url,
         videoUrl: data.video_details.video_url,
         name: data.video_details.channel.name,
-        description: data.video_details.description
+        description: data.video_details.description,
+        thumbnailUrl: data.video_details.thumbnail_url
       }
       setVideoDetails(updateData)
       setApiStatus(apiStatusConstants.success)
@@ -98,12 +92,23 @@ export default function VideoItemDetails({mode, toggleMode}) {
     }
   }    
 
-  const renderVideoDetails = ()=> {
-    if (!videoDetails) return null
-    const { title, viewCount,publishedAt, profileImageUrl, videoUrl,subscriberCount,description, name} = videoDetails
-    const formattedDate = formatDistanceToNow((new Date(publishedAt)))
-    const isSaved = isVideoSaved(videoDetails.id)
-    return (
+  const renderVideoDetails = ()=> (
+    <WatchContext.Consumer>
+      {(value)=>{
+        
+        const {id, title, viewCount,publishedAt,thumbnailUrl, profileImageUrl, videoUrl,subscriberCount,description, name} = videoDetails
+        const formattedDate = formatDistanceToNow((new Date(publishedAt)))
+        const {addVideo} = value
+        
+        const handlesaveVideo = () => {
+          addVideo({...videoDetails})
+          setIsSaved(true)
+        }
+        const handleRemoveVideo = ()=> {
+          
+        }
+
+        return (
           <div>
           <ReactPlayer url={videoUrl} controls={true}/>
             <div>
@@ -114,9 +119,9 @@ export default function VideoItemDetails({mode, toggleMode}) {
               <Para><Godot />{formattedDate}</Para>
               </ViewContainer>
               <LikeContainer>
-                <LikeBtn type='button' label="Like" isactive={activeBtn==='like'} onClick={activeLikeBtn}><AiOutlineLike /> Like</LikeBtn>
-                <LikeBtn type='button' label="Dislike" isactive={activeBtn==='dislike'} onClick={activeDisLikeBtn}><AiOutlineDislike /> Dislike</LikeBtn>
-                <LikeBtn type='button' onClick={handlesaveVideo}><CgPlayListAdd />{isSaved ? 'saved': 'save'}</LikeBtn>
+                <LikeBtn type='button' label="Like" isActive={activeBtn==='like'} onClick={activeLikeBtn}><AiOutlineLike /> Like</LikeBtn>
+                <LikeBtn type='button' label="Dislike" isActive={activeBtn==='dislike'} onClick={activeDisLikeBtn}><AiOutlineDislike /> Dislike</LikeBtn>
+                <LikeBtn type='button' onClick={handlesaveVideo}><CgPlayListAdd />{isSaved? "Saved" : "Save"}</LikeBtn>
               </LikeContainer>
               </ChannelContainer>
               <Channel> 
@@ -133,8 +138,10 @@ export default function VideoItemDetails({mode, toggleMode}) {
             </div>
           </div>
         )
-  }
-
+      }}
+    </WatchContext.Consumer>
+  )  
+  
   const renderFailureView = ()=> {
     return (
       <div className='failure-cotntainer'>

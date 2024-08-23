@@ -46,7 +46,7 @@ const Navbar = ({mode, toggleMode}) => {
         </Link>
         <NavMenu>
           <NavLink>
-            <Link to="/">
+            <Link>
               <ProfileImg onClick={toggleMode} 
               src={mode==='light' ? 
                 "https://static-00.iconduck.com/assets.00/moon-icon-512x512-fm9crgpt.png" 

@@ -32,3 +32,15 @@
   font-size: 30px;
   font-weight: normal;
 }
+.bg-container-dark{
+  background-color: #0f0f0f;
+}
+.bg-container-light{
+  background-color: #f9f9f9 ;
+}
+.text-color-dark{
+  color: #f9f9f9;
+}
+.text-color-light{
+  color: #0f0f0f;
+}

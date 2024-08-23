@@ -107,6 +107,7 @@ export default function GamingRoute({mode, toggleMode}) {
       </div>
     )
   }
+  
   const renderAll = () => {
     switch(apiStatus){
       case apiStatusConstants.success:
@@ -122,7 +123,6 @@ export default function GamingRoute({mode, toggleMode}) {
   return (
     <GamingThemeContainer $mode={mode} toggleMode={toggleMode}>
       {renderAll()}
-      <Link to="/"><button onClick={backtoHome}>Back</button></Link> 
     </GamingThemeContainer>
   )
 }
