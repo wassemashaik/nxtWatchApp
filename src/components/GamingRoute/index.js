@@ -19,18 +19,18 @@ export default function GamingRoute({mode, toggleMode}) {
   const [gamingVideosList, setGamingVideosList] = useState([])
   const [apiStatus, setApiStatus] = useState(apiStatusConstants.initial)
 
-    useEffect(() => {
-        if(jwtToken === undefined) {
-          navigate('/login')
-        }
-      }, [navigate])
-    
-    useEffect(()=> {
-        getGaming()
-    }, [])
+  useEffect(() => {
+      if(jwtToken === undefined) {
+        navigate('/login')
+      }
+    }, [navigate])
+  
+  useEffect(()=> {
+      getGaming()
+  }, [])
 
   const backtoHome = () => {
-        navigate('/')
+    navigate('/')
   }    
   
   const getGaming = async()=>{

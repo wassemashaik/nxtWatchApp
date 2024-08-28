@@ -81,12 +81,10 @@ const HomeRoute =(props)=> {
           <Para>Enjoy! Now to see your channels and recommendations!</Para>
           </BottomContainer>
         </SidebarContainer>
-        {/* use conditional statement here to if the searched word is not found then the not found component should be shown instead of this container */} 
         <SecondContainer>
         <VideosContainer>
         <Outlet />
-        </VideosContainer>
-        {/* {showNotFound && <NotFound mode={mode}/>} */}
+        </VideosContainer> 
         </SecondContainer>
       </HomeContent>
     </HomeContainer>

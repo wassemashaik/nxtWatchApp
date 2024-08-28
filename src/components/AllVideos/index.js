@@ -62,15 +62,6 @@ class AllVideos extends Component {
   renderNoSearchResult=()=> {
     <WatchContext.Consumer>
       {value => {
-        const {isDarkTheme} = value
-        
-        const AllVidoesBgClassName = isDarkTheme ? 'bg-container-dark' : 'bg-container-light'
-        const failureImgUrl = isDarkTheme ?
-        '' 
-        : ''
-        const textColor = isDarkTheme 
-        ? 'text-color-dark'
-        : 'text-color-light'
         const {videosList} = this.state
       const rendervideosList = videosList.length > 0
   
