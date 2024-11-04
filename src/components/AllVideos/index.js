@@ -87,6 +87,7 @@ class AllVideos extends Component {
     </WatchContext.Consumer>
       
   }
+  
   renderLoadingView = ()=>{
     return(
       <div className="loader-container" data-testid="loader">
@@ -100,6 +101,7 @@ class AllVideos extends Component {
       </div>
     )
   }
+
   renderFailureView = () => {
     return (
       <div className='failure-cotntainer'>
@@ -112,6 +114,7 @@ class AllVideos extends Component {
       </div>
     )
   }
+
   renderAll = () => {
     const {apiStatus} = this.state
     switch(apiStatus){
